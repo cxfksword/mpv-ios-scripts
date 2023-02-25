@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 LIBRARIES="libuchardet libfribidi libfreetype libharfbuzz libass ffmpeg libmpv"
-OPENSSL="$(pwd)/openssl-tv"
+
 
 export PKG_CONFIG_PATH
 export LDFLAGS
@@ -45,6 +45,11 @@ SCRATCH="$ROOT/scratch-tv"
 export SRC="$ROOT/src"
 
 for ARCH in $ARCHS; do
+    # build openssl
+    PLATFORM="AppleTV"
+    mkdir -p $SCRATCH/$ARCH/openssl && cd $_ && $SCRIPTS/openssl-build
+    OPENSSL="$SCRATCH/$ARCH/openssl"
+
     if [[ $ARCH = "arm64" ]]; then
         HOSTFLAG="aarch64"
         PLATFORM="AppleTVOS"

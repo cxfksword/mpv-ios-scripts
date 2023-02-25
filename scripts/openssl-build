@@ -1,0 +1,37 @@
+#!/bin/sh
+set -e
+
+rm -rf ./include
+rm -rf ./lib
+mkdir include
+mkdir lib
+
+# cd $SRC/OpenSSL-for-iPhone-*
+if [ ! -f "./lib/libssl-iOS-Sim.a" ] || [ ! -f "./lib/libssl-tvOS-Sim.a" ]; then
+./build-libssl.sh
+fi
+# cd -
+
+cp -r $SRC/OpenSSL-for-iPhone-*/include/ ./include/
+if [[ "$PLATFORM" = "iPhone" ]]; then
+    if [[ "$ARCH" = "x86_64" ]]; then
+        cp $SRC/OpenSSL-for-iPhone-*/lib/libcrypto-iOS-Sim.a ./lib/libcrypto.a
+        cp $SRC/OpenSSL-for-iPhone-*/lib/libssl-iOS-Sim.a ./lib/libssl.a
+    fi
+    if [[ "$ARCH" = "arm64" ]]; then
+        cp $SRC/OpenSSL-for-iPhone-*/lib/libcrypto-iOS.a ./lib/libcrypto.a
+        cp $SRC/OpenSSL-for-iPhone-*/lib/libssl-iOS.a ./lib/libssl.a
+    fi
+fi
+
+if [[ "$PLATFORM" = "AppleTV" ]]; then
+    if [[ "$ARCH" = "x86_64" ]]; then
+        cp $SRC/OpenSSL-for-iPhone-*/lib/libcrypto-tvOS-Sim.a ./lib/libcrypto.a
+        cp $SRC/OpenSSL-for-iPhone-*/lib/libssl-tvOS-Sim.a ./lib/libssl.a
+    fi
+    if [[ "$ARCH" = "arm64" ]]; then
+        cp $SRC/OpenSSL-for-iPhone-*/lib/libcrypto-tvOS.a ./lib/libcrypto.a
+        cp $SRC/OpenSSL-for-iPhone-*/lib/libssl-tvOS.a ./lib/libssl.a
+    fi
+fi
+

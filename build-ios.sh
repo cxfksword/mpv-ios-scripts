@@ -1,7 +1,6 @@
 #!/bin/sh -e
 
 LIBRARIES="libuchardet libfribidi libfreetype libharfbuzz libass ffmpeg libmpv"
-OPENSSL="$(pwd)/openssl-ios"
 
 export PKG_CONFIG_PATH
 export LDFLAGS
@@ -44,6 +43,11 @@ SCRATCH="$ROOT/scratch-ios"
 export SRC="$ROOT/src"
 
 for ARCH in $ARCHS; do
+    # build openssl
+    PLATFORM="iPhone"
+    mkdir -p $SCRATCH/$ARCH/openssl && cd $_ && $SCRIPTS/openssl-build
+    OPENSSL="$SCRATCH/$ARCH/openssl"
+
     if [[ $ARCH = "arm64" ]]; then
         DEPLOYMENT_TARGET="15.0"
         HOSTFLAG="aarch64"

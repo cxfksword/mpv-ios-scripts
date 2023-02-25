@@ -5,6 +5,11 @@ OPT="--disable-fontconfig \
 	--disable-require-system-font-provider \
 	--enable-directwrite"
 
+if [[ "$ARCH" = "x86_64" ]]; then
+	OPT="${OPT} \
+		--disable-asm"
+fi
+
 $SRC/libass*/configure $COMMON_OPTIONS $OPT
 							
 make install
