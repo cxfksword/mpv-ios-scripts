@@ -6,11 +6,9 @@ rm -rf ./lib
 mkdir include
 mkdir lib
 
-# cd $SRC/OpenSSL-for-iPhone-*
-if [ ! -f "./lib/libssl-iOS-Sim.a" ] || [ ! -f "./lib/libssl-tvOS-Sim.a" ]; then
+cd $SRC/OpenSSL-for-iPhone-*
 ./build-libssl.sh
-fi
-# cd -
+cd -
 
 cp -r $SRC/OpenSSL-for-iPhone-*/include/ ./include/
 if [[ "$PLATFORM" = "iPhone" ]]; then
