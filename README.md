@@ -15,6 +15,7 @@ Tested with:
 
 - macOS 10.15.4
 - Xcode 11.3.1
+- Python 3.10.x (not work with Python 3.11.x)
 
 ## Usage
 
